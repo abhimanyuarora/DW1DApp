@@ -43,8 +43,8 @@ class Login(Screen):
         self.add_widget(self.layout)
         self.current='login'
     def change_to_menu(self,value):
-        if self.user_pwd.text=='test' and self.user_pwd.text=='test':
-            self.manager.transition.direction='right'
+        if self.user_pwd.text=='test' and self.user_input.text=='test':
+            self.manager.transition.direction='left'
             self.manager.current='menu'
         else:
             self.login_button.text='Error'
@@ -62,15 +62,15 @@ class Menu(Screen):
         self.layout.add_widget(self.empty)
         self.vote=(Label(text='[b]Voting[/b]', color=(1,0,0,1), font_size=40, markup=True))
         self.layout.add_widget(self.vote)
-        self.garden1=(Button(text='Garden 1', color=(0,0,0,1), font_size=30))
+        self.garden1=(Button(text='', color=(0,0,0,1), font_size=30, background_normal='1st_garden.jpg'))
         self.layout.add_widget(self.garden1)
         self.vote1=Button(text='')
         self.layout.add_widget(self.vote1)
-        self.garden2=(Button(text='Garden 2', color=(0,0,0,1), font_size=30))
+        self.garden2=(Button(text='', color=(0,0,0,1), font_size=30, background_normal='2nd_garden.jpg'))
         self.layout.add_widget(self.garden2)
         self.vote2=Button(text='',width=30, background_color=(0.3,1,0,1))
         self.layout.add_widget(self.vote2)
-        self.garden3=Button(text='Garden 3', color=(0,0,0,1), font_size=30)
+        self.garden3=Button(text='', color=(0,0,0,1), font_size=30)
         self.layout.add_widget(self.garden3)
         self.vote3=Button(text='',width=30)
         self.layout.add_widget(self.vote3)
@@ -79,7 +79,7 @@ class Menu(Screen):
         self.current='menu'
 
 
-# class Menu(Screen):
+class Menu(Screen):
     def __init__(self, **kwargs):
         Screen.__init__(self,**kwargs)
         super(Menu,self).__init__(**kwargs)
@@ -116,7 +116,7 @@ class DWApp(App):
     def build(self):
         # load=self.load_kv("C:/Users/Me/Desktop/textfile.kv")
         sm=ScreenManager()
-        sm.add_widget(Menu(name='mainmenu'))
+        sm.add_widget(Menu(name='menu'))
         sm.add_widget(Login(name='login'))
         sm.current='login'
         return sm
