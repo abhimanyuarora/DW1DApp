@@ -11,14 +11,18 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.metrics import dp,sp
 from kivy.uix.image import Image
 from kivy.garden.navigationdrawer import NavigationDrawer
-'''should add side scrolling if possible for the rankings '''
+from kivy.uix.scrollview import ScrollView
+
 class Screen4(Screen):
     def __init__(self,**kwargs):
         Screen.__init__(self,**kwargs)
-        from kivy.core.window import Window
-        Window.clearcolor=(0.4, 0.8, 1, 1)
         self.layout=BoxLayout(orientation='vertical')
-        self.layout.add_widget(Label(text='Leaderboard', font_size=60, color=(0,0,0,1)))
+        leaderboard=GridLayout(cols=2)
+        menubtn=Button(text='<-', font_size=20, color=(0,0,0,1), size_hint_x=None, size_hint_y=None, width=30, height=50)
+        menubtn.bind(on_press=self.back_to_menu)
+        leaderboard.add_widget(menubtn)
+        leaderboard.add_widget(Label(text='Leaderboard', font_size=60, color=(0,0,0,1)))
+        self.layout.add_widget(leaderboard)
         leaders=GridLayout(rows=1, cols=3)
         leaders.add_widget(Label(text='add image here'))
         # leaders.add_widget(Image(source=''))
@@ -34,8 +38,10 @@ class Screen4(Screen):
         experts.add_widget(Label(text='add image here'))
         # leaders.add_widget(Image(source=''))
         experts.add_widget(Label(text='add image here'))
+        scroll=ScrollView()
+        scroll.add_widget(experts)
         # leaders.add_widget(Image(source=''))
-        self.layout.add_widget(experts)
+        self.layout.add_widget(scroll)
         self.layout.add_widget(Label(text='Intermediate', font_size=20, color=(0,0,0,1)))
         junior=GridLayout(rows=1, cols=3)
         junior.add_widget(Label(text='add image here'))
@@ -56,23 +62,29 @@ class Screen4(Screen):
         self.layout.add_widget(newcomers)
         self.add_widget(self.layout)
         self.current='scr4'
-class Switcher(App):
-    def build(self):
-        sm=ScreenManager()
-        sm.add_widget(Screen4(name='scr4'))
-        sm.current='scr4'
-        return sm
-
-
-def reset():
-    import kivy.core.window as window
-    from kivy.base import EventLoop
-    if not EventLoop.event_listeners:
-        from kivy.cache import Cache
-        window.Window=window.core_select_lib('window', window.window_impl, True)
-        Cache.print_usage()
-        for cat in Cache._categories:
-            Cache._objects[cat]={}
-reset()
-myapp=Switcher()
-myapp.run()
+    def back_to_menu(self, instance):
+        self.manager.transition.direction='right'
+        self.manager.current='scr3'
+        from kivy.core.window import Window
+        Window.clearcolor=((252/255), (245/255), (237/255), 1)
+        Window.size=(650,650)
+# class Switcher(App):
+#     def build(self):
+#         sm=ScreenManager()
+#         sm.add_widget(Screen4(name='scr4'))
+#         sm.current='scr4'
+#         return sm
+#
+#
+# def reset():
+#     import kivy.core.window as window
+#     from kivy.base import EventLoop
+#     if not EventLoop.event_listeners:
+#         from kivy.cache import Cache
+#         window.Window=window.core_select_lib('window', window.window_impl, True)
+#         Cache.print_usage()
+#         for cat in Cache._categories:
+#             Cache._objects[cat]={}
+# reset()
+# myapp=Switcher()
+# myapp.run()

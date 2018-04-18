@@ -18,13 +18,22 @@ class Screen6(Screen):
         from kivy.core.window import Window
         Window.clearcolor=(1, 1, 1, 1)
         self.layout=BoxLayout(orientation='vertical')
+        menubar=GridLayout(cols=2)
+        menubtn=Button(text='<-', font_size=20, color=(0,0,0,1), size_hint_x=None, size_hint_y=None, width=30, height=70)
+        menubtn.bind(on_press=self.back_to_menu)
+        menubar.add_widget(menubtn)
+        menubar.add_widget(Label(text='SAMPLE TEXT', font_size=50, color=(97/255,127/255,62/255,0), markup=True)) #ALIGNMENT OF BUTTON
+        self.layout.add_widget(menubar)
         self.layout.add_widget(Label(text='[u]Camera[/u]', font_size=50, color=(0,0,0,1), markup=True))
         #add camera here
         self.add_widget(self.layout)
         self.current='scr6'
-class testapp(App):
-    def build(self):
-        sm=ScreenManager()
-        sm.add_widget(Screen6(name='scr6'))
-        return sm
-testapp().run()
+    def back_to_menu(self, instance):
+        self.manager.transition.direction='right'
+        self.manager.current='scr3'
+# class testapp(App):
+#     def build(self):
+#         sm=ScreenManager()
+#         sm.add_widget(Screen6(name='scr6'))
+#         return sm
+# testapp().run()

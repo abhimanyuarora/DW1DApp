@@ -12,7 +12,14 @@ from kivy.metrics import dp,sp
 from kivy.uix.image import Image
 from kivy.garden.navigationdrawer import NavigationDrawer
 from kivy.uix.label import Label
-
+from screen3 import Screen3
+from Screen2 import Menu
+from screen4 import Screen4
+from screen5 import Screen5
+from screen6 import Screen6
+from screen7 import Screen7
+from screen8 import Screen8
+from firebase import firebase
 import time
 KIVY_DPI=240
 KIVY_METRICS_DENSITY=2
@@ -20,7 +27,6 @@ class Login(Screen):
     def __init__(self,**kwargs):
         Screen.__init__(self,**kwargs)
         from kivy.core.window import Window
-        Window.clearcolor=(1, 1, 1, 1)
         root=FloatLayout(size=(dp(300),dp(300)))
         self.layout = FloatLayout(size=(sp(300),sp(300)))
         self.layout.add_widget(Image(source='garden_lah.png', size_hint=(0.9,0.9), pos_hint={'top':1.03, 'right':0.95}))
@@ -42,84 +48,99 @@ class Login(Screen):
         self.layout.add_widget(self.login_button)
         self.add_widget(self.layout)
         self.current='login'
+    # def get_userpwd(self,instance):
+    #     url=''
+    #     token=''
+    #     userfire=firebase.FirebaseApplication(url, token)
+    #     pwd=userfire.get()
+    #     user=userfire.get()
     def change_to_menu(self,value):
         if self.user_pwd.text=='test' and self.user_input.text=='test':
             self.manager.transition.direction='left'
             self.manager.current='menu'
+            from kivy.core.window import Window
+            Window.size=(650,650)
+            Window.clearcolor=((252/255), (245/255), (237/255), 1)
         else:
-            self.login_button.text='Error'
-            time.sleep(0.1)
             self.login_button.text='Login'
     def quit_app(self,value):
         App.get_running_app().stop()
-class Menu(Screen):
-    def __init__(self,**kwargs):
-        Screen.__init__(self,**kwargs)
-        from kivy.core.window import Window
-        Window.clearcolor=(0.4, 0.8, 1, 1)
-        self.layout = GridLayout(cols=2, spacing=(30))
-        self.empty=(Label(text='[b]Gardens[/b]', color=(1,0,0,1), font_size=40, markup=True))
-        self.layout.add_widget(self.empty)
-        self.vote=(Label(text='[b]Voting[/b]', color=(1,0,0,1), font_size=40, markup=True))
-        self.layout.add_widget(self.vote)
-        self.garden1=(Button(text='', color=(0,0,0,1), font_size=30, background_normal='1st_garden.jpg'))
-        self.layout.add_widget(self.garden1)
-        self.vote1=Button(text='')
-        self.layout.add_widget(self.vote1)
-        self.garden2=(Button(text='', color=(0,0,0,1), font_size=30, background_normal='2nd_garden.jpg'))
-        self.layout.add_widget(self.garden2)
-        self.vote2=Button(text='',width=30, background_color=(0.3,1,0,1))
-        self.layout.add_widget(self.vote2)
-        self.garden3=Button(text='', color=(0,0,0,1), font_size=30)
-        self.layout.add_widget(self.garden3)
-        self.vote3=Button(text='',width=30)
-        self.layout.add_widget(self.vote3)
-        # self.vote1.bind(self.update_canvas)
-        self.add_widget(self.layout)
-        self.current='menu'
+# class Menu(Screen):
+#     def __init__(self,**kwargs):
+#         Screen.__init__(self,**kwargs)
+#         from kivy.core.window import Window
+#         Window.clearcolor=(0.4, 0.8, 1, 1)
+#         self.layout = GridLayout(cols=2, spacing=(30))
+#         self.empty=(Label(text='[b]Gardens[/b]', color=(1,0,0,1), font_size=40, markup=True))
+#         self.layout.add_widget(self.empty)
+#         self.vote=(Label(text='[b]Voting[/b]', color=(1,0,0,1), font_size=40, markup=True))
+#         self.layout.add_widget(self.vote)
+#         self.garden1=(Button(text='', color=(0,0,0,1), font_size=30, background_normal='1st_garden.jpg'))
+#         self.layout.add_widget(self.garden1)
+#         self.vote1=Button(text='')
+#         self.layout.add_widget(self.vote1)
+#         self.garden2=(Button(text='', color=(0,0,0,1), font_size=30, background_normal='2nd_garden.jpg'))
+#         self.layout.add_widget(self.garden2)
+#         self.vote2=Button(text='',width=30, background_color=(0.3,1,0,1))
+#         self.layout.add_widget(self.vote2)
+#         self.garden3=Button(text='', color=(0,0,0,1), font_size=30)
+#         self.layout.add_widget(self.garden3)
+#         self.vote3=Button(text='',width=30)
+#         self.layout.add_widget(self.vote3)
+#         # self.vote1.bind(self.update_canvas)
+#         self.add_widget(self.layout)
+#         self.current='menu'
 
 
-class Menu(Screen):
-    def __init__(self, **kwargs):
-        Screen.__init__(self,**kwargs)
-        super(Menu,self).__init__(**kwargs)
-        navigationdrawer = NavigationDrawer()
-        side_panel = BoxLayout(orientation='vertical')
-        side_panel.add_widget(Label(text='Panel label'))
-        # bl1=Button(text='A button')
-        # bl1.bind(on_press=self.changesettings)
-        #side_panel.add_widget(bl1)
-        side_panel.add_widget(Button(text='Another button'))
-        navigationdrawer.add_widget(side_panel)
-        self.add_widget(navigationdrawer)
-        main_panel = BoxLayout(orientation='vertical')
-        label_bl = BoxLayout(orientation='horizontal')
-        # label = Label(text=label_head, font_size='15sp',
-                      # markup=True, valign='top')
-        label_bl.add_widget(Widget(size_hint_x=None, width=dp(10)))
-        # label_bl.add_widget(label)
-        label_bl.add_widget(Widget(size_hint_x=None, width=dp(10)))
-        main_panel.add_widget(Widget(size_hint_y=None, height=dp(10)))
-        main_panel.add_widget(label_bl)
-        main_panel.add_widget(Widget(size_hint_y=None, height=dp(10)))
-        navigationdrawer.add_widget(main_panel)
-        # label.bind(size=label.setter('text_size'))
-        def set_anim_type(name):
-            navigationdrawer.anim_type = name
-        button = Button(text='toggle NavigationDrawer state (animate)',
-                        size_hint_y=0.2)
-        button.bind(on_press=lambda j: set_anim_type('slide_above_anim'))
-        button.bind(on_press=lambda j: navigationdrawer.toggle_state())
-        main_panel.add_widget(button)
-
-class DWApp(App):
+# class Menu(Screen):
+#     def __init__(self, **kwargs):
+#         Screen.__init__(self,**kwargs)
+#         super(Menu,self).__init__(**kwargs)
+#         navigationdrawer = NavigationDrawer()
+#         side_panel = BoxLayout(orientation='vertical')
+#         side_panel.add_widget(Label(text='Panel label'))
+#         # bl1=Button(text='A button')
+#         # bl1.bind(on_press=self.changesettings)
+#         #side_panel.add_widget(bl1)
+#         side_panel.add_widget(Button(text='Another button'))
+#         navigationdrawer.add_widget(side_panel)
+#         self.add_widget(navigationdrawer)
+#         main_panel = BoxLayout(orientation='vertical')
+#         label_bl = BoxLayout(orientation='horizontal')
+#         # label = Label(text=label_head, font_size='15sp',
+#                       # markup=True, valign='top')
+#         label_bl.add_widget(Widget(size_hint_x=None, width=dp(10)))
+#         # label_bl.add_widget(label)
+#         label_bl.add_widget(Widget(size_hint_x=None, width=dp(10)))
+#         main_panel.add_widget(Widget(size_hint_y=None, height=dp(10)))
+#         main_panel.add_widget(label_bl)
+#         main_panel.add_widget(Widget(size_hint_y=None, height=dp(10)))
+#         navigationdrawer.add_widget(main_panel)
+#         # label.bind(size=label.setter('text_size'))
+#         def set_anim_type(name):
+#             navigationdrawer.anim_type = name
+#         button = Button(text='toggle NavigationDrawer state (animate)',
+#                         size_hint_y=0.2)
+#         button.bind(on_press=lambda j: set_anim_type('slide_above_anim'))
+#         button.bind(on_press=lambda j: navigationdrawer.toggle_state())
+#         main_panel.add_widget(button)
+class DW1DApp(App):
     def build(self):
-        # load=self.load_kv("C:/Users/Me/Desktop/textfile.kv")
         sm=ScreenManager()
         sm.add_widget(Menu(name='menu'))
+        sm.add_widget(Screen3(name='scr3'))
         sm.add_widget(Login(name='login'))
+        sm.add_widget(Screen7(name='scr7'))
+        sm.add_widget(Screen4(name='scr4'))
+        sm.add_widget(Screen5(name='scr5'))
+        sm.add_widget(Screen6(name='scr6'))
+        sm.add_widget(Screen8(name='scr8'))
         sm.current='login'
+        from kivy.core.window import Window
+        # Config.set('graphics', 'resizable', False)
+        Window.clearcolor=(1,1,1, 1)
+        Window.size=(650,650)
         return sm
 
 if __name__ == '__main__':
-    DWApp().run()
+    DW1DApp().run()
