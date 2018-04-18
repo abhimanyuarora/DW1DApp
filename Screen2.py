@@ -10,6 +10,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.garden.navigationdrawer import NavigationDrawer
 from kivy.metrics import dp,sp
+from kivy.config import Config
 
 KIVY_DPI=240
 KIVY_METRICS_DENSITY=2
@@ -17,7 +18,9 @@ class Menu(Screen):
     def __init__(self,**kwargs):
         Screen.__init__(self,**kwargs)
         from kivy.core.window import Window
+        Config.set('graphics', 'resizable', False)
         Window.clearcolor=(0.4, 0.8, 1, 1)
+        Window.size=(500,500)
         '''navigationdrawer KIV'''
         # self.navigationdrawer = NavigationDrawer()
         # self.side_panel = BoxLayout(orientation='vertical')
